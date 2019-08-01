@@ -7,6 +7,17 @@
     </head>
     <body>
 
+        <nav>
+
+            <div>Mike's default system styles</div>
+
+            <a href="">Elements</a>
+            <a href="">Templates</a>
+            <a href="">Themes</a>
+            <a href="">Downloads</a>
+
+        </nav>
+
         <h1>Header 1</h1>
         <h2>Header 2</h2>
         <h3>Header 3</h3>
