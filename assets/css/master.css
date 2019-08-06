@@ -1,9 +1,9 @@
 /* Import fonts */
 
 /* Import layouts */
-@import url(/layout/containers.css);
+@import url(layout/containers.css);
 
 /* Import components */
-@import url(/components/elements.css);
-@import url(/components/alerts.css);
-@import url(/components/form.css);
+@import url(components/elements.css);
+@import url(components/alerts.css);
+@import url(components/form.css);
