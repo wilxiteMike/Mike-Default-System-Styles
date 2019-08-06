@@ -9,7 +9,7 @@
 
         <nav>
 
-            <div>Mike's default system styles</div>
+            <div>Mike's default system styles - make logo the tree from my website but then put it in a black circle like vestas</div>
 
             <a href="">Elements</a>
             <a href="">Templates</a>
