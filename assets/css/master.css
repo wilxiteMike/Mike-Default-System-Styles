@@ -1,6 +1,9 @@
 /* Import fonts */
 
-/* Import styles */
-@import url(elements.css);
-@import url(containers.css);
-@import url(form.css);
+/* Import layouts */
+@import url(/layout/containers.css);
+
+/* Import components */
+@import url(/components/elements.css);
+@import url(/components/alerts.css);
+@import url(/components/form.css);
