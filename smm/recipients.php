@@ -19,13 +19,14 @@
         <div id="app">
 
             <div class="filter-container" style="display: flex">
-                <div class="input-container no-margin">
+                <div class="input-container">
 					<input type="text" name="email" placeholder="Email" />
 				</div>
-				<div class="input-container no-margin">
-					<input type="password" name="name" placeholder="Name" />
+				<div class="input-container">
+					<input type="text" name="name" placeholder="Name" />
                 </div>
                 <div class="button blue">Search</div>
+                <div class="button blue">Upload CSV</div>
             </div>
 
             <div class="table-container">
@@ -39,7 +40,20 @@
                             <th>Latest Email</th>
                         </tr>
                     </thead>
+                    <tbody >
+                        <tr>
+                            <td>test@test.com</td>
+                            <td>Test Name</td>
+                            <td>17/12/2019 15:02</td>
+                            <td><span class="status-tag status-green">Newsletter</span><span class="status-tag status-red">Spam</span></td>
+                            <td>December 2019 Newsletter</td>
+                        </tr>
+                    </tbody>
                 </table>
+            </div>
+
+            <div class="pagination-container">
+
             </div>
 
         </div>  

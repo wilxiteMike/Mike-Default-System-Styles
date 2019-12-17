@@ -944,6 +944,22 @@ table tbody td {
     color: #1890ff;
 }
 
+/* Filter container */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filter-container > * {
+    margin-right: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+.filter-container .input-container {
+    width: auto;
+    margin: 0px;
+}
+
 @media all and (max-width: 1300px) {
 
     .stats-container {
