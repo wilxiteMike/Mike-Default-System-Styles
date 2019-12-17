@@ -3,11 +3,11 @@
 $sidebarNav = array(
     "Dashboard" => array(
         "icon" => "home",
-        "pageurl" => "/"
+        "pageurl" => "index.php"
     ),
     "Recipients" => array(
         "icon" => "users",
-        "pageurl" => "/recipients"
+        "pageurl" => "recipients.php"
     ),
     "Groups" => array(
         "icon" => "layer-group",
@@ -160,13 +160,13 @@ function create_active_nav($sidebarNav, $activeNav, $additionalNav = "")
     <span id="page-active-nav"><?= create_active_nav($sidebarNav, $activeNav, $additionalNav) ?></span>
 
     <span id="nav-menu">
-        <i class="fas fa-user nav-menu-icon"></i>
+        <i class="fas fa-user-circle nav-menu-icon"></i>
         <i class="far fa-chevron-down nav-menu-toggle"></i>
         <ul id="nav-menu-drop">
             <a href="/my-account"><li>My Account</li></a>
             <a href="/my-preferences"><li>Preferences</li></a>
             <hr>
-            <a href="/logout"><li>Logout</li></a>
+            <a href="login.php"><li>Logout</li></a>
             <div class="menu-arrow"></div>
         </ul>
     </span>
