@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/master.css" type="text/css" />
+        <script src="https://kit.fontawesome.com/e6e83e02f8.js" crossorigin="anonymous" integrity="sha384-YWiI0Cli0o/bFXCXg9qonZOGKZU9t3wy1U9oYWWmKJif85uQBcNQ2wlP91aRxKnV"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+
+            html {
+                margin: 0px;
+                padding: 0px;
+            }
+            
+            body {
+                margin: 0px;
+                padding: 0px;
+                webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+                font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+            }
+
+            h1 {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                color: #162e4b;
+                font-size: 2em;
+            }
+
+            h2 {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                color: #162e4b;
+                font-size: 1.5em;
+            }
+
+            h3 {
+                margin-top: 3px;
+                margin-bottom: 5px;
+                color: #162e4b;
+                font-size: 1em;
+            }
+
+            p {
+                color:rgb(96, 98, 102);
+                font-size: 0.9em;
+            }
+        
+            #sidebar {
+                background-color: rgb(48, 65, 86);
+                width: 60px;
+                height: 100%;
+                position: fixed;
+                transition: 0.5s;
+                z-index: 900;
+                overflow: hidden;
+                overflow-y: auto;
+                top: 0px;
+                -webkit-touch-callout: none; 
+                -webkit-user-select: none; 
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none; 
+                user-select: none;
+            }
+
+            #sidebar.open {
+                width: 210px;
+            }
+
+            #sidebar .sidebar-item:hover, #sidebar .sidebar-item .submenu-open {
+                background-color: #263445!important;
+            }
+
+            #sidebar .sidebar-item.menu-toggle {
+                border-bottom: 1px solid rgba(191, 203, 217, 0.3);
+            }
+
+            #sidebar .sidebar-item a {
+                color: rgb(191, 203, 217);
+                padding: 0 20px;
+                text-decoration: none;
+                white-space: nowrap;
+                font-size: 14px;
+                height: 56px;
+                width: 100%;
+                display: block;
+                line-height: 56px;
+                box-sizing: border-box;
+            }
+
+            #sidebar .sidebar-item.active a {
+                color:rgb(64, 158, 255);
+            }
+
+            #sidebar .sidebar-item span {
+                display: none;
+            }
+
+            #sidebar.open .sidebar-item span {
+                display: inline-block;
+            }
+
+            #sidebar .sidebar-item.has-submenu > a > span::after {
+                content: "\f078";
+                font-family: "Font Awesome 5 Pro";
+                color: rgb(191, 203, 217);
+                position: absolute;
+                right: 20px;
+                font-size: 12px;
+                font-weight: 100;
+                opacity: 0.5;
+            }
+
+            #sidebar .sidebar-item.has-submenu > a.submenu-open > span::after {
+                content: "\f077";
+            }
+
+            #sidebar .sidebar-item i {
+                margin-right: 10px;
+                text-decoration: none;
+            }
+
+            #sidebar .sidebar-submenu {
+                display: none;
+            }
+
+            #sidebar .sidebar-submenu.open {
+                display: block;
+                background-color: #263445!important;
+            }
+
+            #sidebar .sidebar-submenu.open .sidebar-item:hover {
+                background-color: #001528!important;
+            }
+
+            #sidebar.open .sidebar-submenu .sidebar-item a {
+                padding-left: 40px;
+            }
+
+            #nav {
+                background-color:rgb(255, 255, 255);
+                position: fixed;
+                top: 0px;
+                width: 100%;
+                margin-left: 60px;
+                height: 56px;
+                transition: 0.5s;
+                overflow: hidden;
+                box-sizing: border-box;
+                box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+                z-index: 800;
+            }
+
+            #nav.open {
+                margin-left: 210px;
+            }
+
+            #nav #page-title {
+                font-size: 16px;
+                line-height: 56px;
+                margin: 0px;
+                margin-left: 30px;
+                font-weight: 100;
+                color: rgb(113, 132, 155);
+            }
+
+            #app {
+                background-color: #f0f2f5;
+                margin-left: 60px;
+                overflow: hidden;
+                min-height: 100vh;
+                transition: 0.5s;
+                padding: 25px;
+                margin-top: 56px;
+            }
+
+            #app.open {
+                margin-left: 210px;
+            }
+
+            /* Containers */
+            .container {
+                width: 100%;
+                margin: 15px 0px;
+                padding: 10px;
+                box-sizing: border-box;
+                box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);;
+                position: relative;
+                background-color: #fff;
+                min-height: 90px;
+                overflow: auto;
+                flex-grow: 1;
+            }
+
+
+            .container:after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            .containerSplit {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0px -15px;
+            }
+
+            .containerSplit .container {
+                width: calc(100% - 30px);
+                margin: 15px;
+            }
+
+            .containerSplit.halfContainer .container {
+                width: calc(50% - 30px);
+            }
+
+            .containerSplit.thirdContainer .container {
+                width: calc(33.33% - 30px);
+            }
+
+            .containerSplit.thirdContainer .container.twoThirds {
+                width: calc(66.66% - 30px);
+            }
+
+            .containerSplit.quarterContainer .container {
+                width: calc(25% - 30px);
+            }
+
+            .containerSplit.quarterContainer .container.twoQuarters {
+                width: calc(50% - 30px);
+            }
+
+            .containerSplit.quarterContainer .container.threeQuarters {
+                width: calc(75% - 30px);
+            }
+
+            .container > h2 {
+                margin: -10px;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 10px;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .container > h2 .icon {
+                font-size: 18px;
+            }
+
+            .container > h2 .button {
+                margin-top: -5px;
+            }
+
+            .container h3 {
+                border-bottom: 1px solid #eaeaea;
+                color: #717171;
+                padding-bottom: 10px;
+                padding-left: 10px;
+                margin-right: -10px;
+                margin-bottom: 5px;
+            }
+
+            table {
+
+            }
+
+            table thead {
+
+            }
+
+            @media all and (max-width: 768px) {
+
+                #sidebar {
+                    height: 56px;
+                    top: 0px;
+                    transition: 0.1s;
+                    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+                    overflow-y: hidden;
+                }
+
+                #sidebar.open {
+                    overflow-y: auto;
+                }
+
+                #nav {
+                    margin-left: 60px;
+                    transition: 0.1s;
+                }
+
+                #app {
+                    margin-left: 0px;
+                    margin-top: 56px;
+                    transition: 0.1s;
+                }
+
+                #sidebar.open {
+                    width: 100%;
+                    height: 100%;
+                }
+
+            }
+        
+        </style>
+
+    </head>
+    <body>
+
+        <div id="sidebar">
+
+            <div class="sidebar-item menu-toggle">
+                <a><i class="fa-fw fas fa-bars"></i> <span>Menu</span></a>
+            </div>
+            <div class="sidebar-item active">
+                <a href=""><i class="fa-fw fas fa-home"></i> <span>Dashboard</span></a>
+            </div>
+            <div class="sidebar-item has-submenu">
+                <a><i class="fa-fw fas fa-cubes"></i> <span>Elements</span></a>
+                <div class="sidebar-submenu">
+                    <div class="sidebar-item">
+                        <a href=""><i class="fa-fw fas fa-columns"></i> <span>Containers</span></a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href=""><i class="fa-fw fas fa-table"></i> <span>Tables</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-item">
+                <a href=""><i class="fa-fw fas fa-home"></i> <span>Templates</span></a>
+            </div>
+            <div class="sidebar-item">
+                <a href=""><i class="fa-fw fas fa-home"></i> <span>Test</span></a>
+            </div>
+
+        </div>  
+
+        <div id="nav">
+
+            <span id="page-title">Dashboard</span>
+            
+        </div>
+
+        <div id="app">
+
+            <h1>Welcome to Mikes Default System Styles</h1>
+
+            <h2>About</h2>
+
+            <p>These default styles are designed for systems rather than website, this can include software such as CMSs, CRMs or Anything you want to use it for</p>
+
+            <div class="container">
+
+                <h2>Full width container</h2>
+
+            </div>
+
+            <div class="containerSplit halfContainer">
+
+                <div class="container">
+
+                    <h2>Licence</h2>
+
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+                </div>
+
+                <div class="container">
+
+                    <h2>Latest Release</h2>
+
+                    <h3>v1.2</h3>
+
+                    <p>Some details about the updates</p>
+
+                </div>
+
+            </div>
+
+            <div class="containerSplit thirdContainer">
+
+                <div class="container">
+
+                    <h2>Container 1/3</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/3</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/3</h2>
+
+                </div>  
+
+                <div class="container twoThirds">
+
+                    <h2>Container 2/3</h2>
+    
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/3</h2>
+
+                </div>  
+
+            </div>  
+
+            <div class="containerSplit quarterContainer">
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+    
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div>  
+
+                <div class="container twoQuarters">
+
+                    <h2>Container 2/4</h2>
+
+                </div> 
+                
+                <div class="container threeQuarters">
+
+                    <h2>Container 3/4</h2>
+    
+                </div>  
+
+                <div class="container">
+
+                    <h2>Container 1/4</h2>
+
+                </div> 
+
+            </div>  
+
+            <h2>Example Table</h2>
+
+            <table>
+    
+                <thead>
+    
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Status</th>
+                    </tr>
+    
+                </thead>
+    
+                <tbody>
+    
+                    <tr>
+                        <td>Mike</td>
+                        <td>21</td>
+                        <td></td>
+                    </tr>
+    
+                    <tr>
+                        <td>Test</td>
+                        <td>27</td>
+                        <td></td>
+                    </tr>
+    
+                    <tr>
+                        <td>Test</td>
+                        <td>27</td>
+                        <td></td>
+                    </tr>
+    
+                    <tr>
+                        <td>Test</td>
+                        <td>27</td>
+                        <td></td>
+                    </tr>
+    
+                    <tr>
+                        <td>Test</td>
+                        <td>27</td>
+                        <td></td>
+                    </tr>
+    
+                    <tr>
+                        <td>Test</td>
+                        <td>27</td>
+                        <td></td>
+                    </tr>
+    
+                </tbody>
+    
+            </table>
+
+        </div>  
+
+        <!-- Move to separate file -->
+        <script>
+        
+            $('.menu-toggle').click( function(){
+
+                $('#sidebar').toggleClass('open');
+                $('#nav').toggleClass('open');
+                $('#app').toggleClass('open');
+
+            });
+
+            $('.sidebar-item.has-submenu a').click( function(){
+
+                $(this).toggleClass('submenu-open')
+                $(this).next('.sidebar-submenu').toggleClass('open');
+
+            });
+
+        </script>
+
+    </body>
+</html>
