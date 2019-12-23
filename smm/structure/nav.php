@@ -11,15 +11,15 @@ $sidebarNav = array(
     ),
     "Groups" => array(
         "icon" => "layer-group",
-        "pageurl" => "/groups"
+        "pageurl" => "groups.php"
     ),
     "Emails" => array(
         "icon" => "envelope",
-        "pageurl" => "/emails"
+        "pageurl" => "emails.php"
     ),
     "Sender" => array(
         "icon" => "paper-plane",
-        "pageurl" => "/sender"
+        "pageurl" => "sender.php"
     ),
     "Analysis" => array(
         "icon" => "file-chart-line",
@@ -27,15 +27,15 @@ $sidebarNav = array(
         "submenu" => array(
             "Email Analysis" => array(
                 "icon" => "envelope-open",
-                "pageurl" => "/analysis/emails",
+                "pageurl" => "analysis-emails.php",
             ),
             "Usage" => array(
                 "icon" => "chart-bar",
-                "pageurl" => "/analysis/usage"
+                "pageurl" => "analysis-usage.php"
             ),
             "Activity Logs" => array(
                 "icon" => "clipboard-list",
-                "pageurl" => "/analysis/activity"
+                "pageurl" => "analysis-activity.php"
             )
         )
     ),
@@ -43,17 +43,21 @@ $sidebarNav = array(
         "icon" => "cogs",
         "pageurl" => "",
         "submenu" => array(
-            "General Settings" => array(
-                "icon" => "cog",
-                "pageurl" => "/settings/general"
+            "Company Settings" => array(
+                "icon" => "building",
+                "pageurl" => "settings-company.php"
+            ),
+            "Email Settings" => array(
+                "icon" => "envelope-open-text",
+                "pageurl" => "settings-emails.php"
             ),
             "Custom Fields" => array(
                 "icon" => "stream",
-                "pageurl" => "/settings/fields"
+                "pageurl" => "settings-fields.php"
             ),
             "Unsubscribe Page" => array(
                 "icon" => "users-cog",
-                "pageurl" => "/settings/unsubscribe",
+                "pageurl" => "settings-unsubscribe.php",
             )
         )
     )
@@ -145,7 +149,7 @@ function create_active_nav($sidebarNav, $activeNav, $additionalNav = "")
 
 ?>
 
-<div id="sidebar">
+<div id="sidebar" class="<?= $_COOKIE["__Host-nav-control"] ? "open" : "" ?>">
 
     <div class="sidebar-item menu-toggle">
         <a><i class="fa-fw fas fa-bars"></i> <span>Menu</span></a>
@@ -155,7 +159,7 @@ function create_active_nav($sidebarNav, $activeNav, $additionalNav = "")
 
 </div>  
 
-<div id="nav">
+<div id="nav" class="<?= $_COOKIE["__Host-nav-control"] ? "open" : "" ?>">
 
     <span id="page-active-nav"><?= create_active_nav($sidebarNav, $activeNav, $additionalNav) ?></span>
 
@@ -177,6 +181,12 @@ function create_active_nav($sidebarNav, $activeNav, $additionalNav = "")
         
     $('.menu-toggle').click( function(){
 
+        if($('#sidebar').hasClass('open')) {
+            setCookie("nav-control", "0", 900, "/")
+        } else {
+            setCookie("nav-control", "1", 900, "/")
+        }
+
         $('#sidebar').toggleClass('open');
         $('#nav').toggleClass('open');
         $('#app').toggleClass('open');
@@ -195,6 +205,28 @@ function create_active_nav($sidebarNav, $activeNav, $additionalNav = "")
         $(this).toggleClass('open');
         $('#nav-menu .nav-menu-toggle').toggleClass('fa-chevron-down');
         $('#nav-menu .nav-menu-toggle').toggleClass('fa-chevron-up');
+
+    });
+
+    function setCookie(cname, cvalue, exdays, expath) {
+
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = "__Host-" + cname + "=" + cvalue + ";" + expires + ";path=" + expath + ";secure";
+
+    }
+
+    $( function(){
+
+        var nav_control_cookie = <?= $_COOKIE["__Host-nav-control"] ?>;
+        var window_width = $(window).width();
+
+        if(window_width <= 768) {
+            $('#sidebar').removeClass('open');
+            $('#nav').removeClass('open');
+            $('#app').removeClass('open');
+        }
 
     });
 

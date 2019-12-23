@@ -16,7 +16,7 @@
         include "structure/nav.php"; 
         ?>
 
-        <div id="app">
+        <div id="app" class="<?= $_COOKIE["__Host-nav-control"] ? "open" : "" ?>">
 
             <div class="filter-container" style="display: flex">
                 <div class="input-container">
@@ -37,7 +37,7 @@
                             <th>Name</th>
                             <th>Created</th>
                             <th>Groups</th>
-                            <th>Latest Email</th>
+                            <th>Latest Email sdfdfsdfd fd sfds fsd s fdfsdfd </th>
                         </tr>
                     </thead>
                     <tbody >

@@ -17,7 +17,7 @@
         include "structure/nav.php"; 
         ?>
 
-        <div id="app">
+        <div id="app" class="<?= $_COOKIE["__Host-nav-control"] ? "open" : "" ?>">
 
             <h1>Welcome Michael to Shoot My Mail</h1>
 
